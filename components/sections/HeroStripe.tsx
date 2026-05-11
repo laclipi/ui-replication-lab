@@ -65,9 +65,15 @@ export function HeroStripe() {
                   --------
                   text-balance equilibra a 2 líneas casi siempre.
                   En lg pasa a left-aligned con max-w-xl para forzar wrap natural
-                  → look editorial. Mantengo leading-[1.05] denso. */}
+                  → look editorial. Mantengo leading-[1.05] denso.
+
+                  "payments" va con .gradient-text-aurora → la palabra clave del
+                  brand se pinta con el mismo degradado del backdrop. Truco
+                  pequeño, impacto enorme: el ojo te lleva directo a esa palabra
+                  y a la vez "ata" el headline al fondo. */}
               <h1 className="text-5xl leading-[1.05] font-semibold tracking-tight text-balance sm:text-6xl lg:max-w-xl lg:text-7xl">
-                Build the future of payments
+                Build the future of{" "}
+                <span className="gradient-text-aurora">payments</span>
               </h1>
 
               {/* Sub-copy — más estrecho que el h1 para crear contraste. */}

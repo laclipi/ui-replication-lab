@@ -227,6 +227,30 @@
     clip-path: polygon(0 0, 100% 0, 100% calc(100% - 5vw), 0 100%);
   }
 
+  /* gradient-text-aurora
+     --------------------
+     Truco clásico de landings dev-tool: una palabra del headline pintada con
+     el mismo degradado del backdrop → tu cerebro registra "esto es coherente,
+     diseñado". Funciona por background-clip: text:
+
+       1. La caja del span recibe un linear-gradient como background.
+       2. background-clip: text recorta el fondo a la SILUETA de las letras.
+       3. color: transparent deja ver el background-clipped por debajo.
+
+     Los colores son los mismos cian/violeta/magenta del aurora — coherencia
+     visual sin que parezcan tres elementos sueltos. */
+  .gradient-text-aurora {
+    background: linear-gradient(
+      135deg,
+      oklch(0.78 0.18 220),
+      oklch(0.6 0.25 285) 50%,
+      oklch(0.65 0.25 320)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
   /* code-window
      -----------
      Marco para el panel de código del hero. Imita ventana de macOS:
