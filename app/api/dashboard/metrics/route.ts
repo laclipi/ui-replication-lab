@@ -1,26 +1,45 @@
-import { NextResponse } from "next/server"; // Helper de Next para responder JSON tipado
 import { getDashboardMetrics } from "@/lib/dashboard/metrics"; // Misma fuente de verdad que usa la page
+import { apiSuccess, apiError } from "@/lib/api/responses"; // Helpers de envelope tipado
 
 // GET /api/dashboard/metrics
 // --------------------------
 // Endpoint REST de las métricas del dashboard.
-// - Delegate a getDashboardMetrics() en lib/dashboard/metrics.ts → un solo lugar para
-//   evolucionar la lógica de datos (mock → DB → CRM…).
-// - Útil para clientes externos, refetches desde el navegador o demo via curl.
 //
-// La Server Component de la página NO pasa por aquí: lee directamente del módulo,
-// evitando un round-trip HTTP innecesario en cada render.
+// Tipado:
+//   getDashboardMetrics() devuelve DashboardMetrics (validado en boundary
+//   con DashboardMetricsSchema). El helper apiSuccess propaga ese tipo a la
+//   NextResponse generic → cualquier consumidor en TS puede inferir el shape
+//   importando este módulo o directamente DashboardMetrics.
+//
+// Errores:
+//   - 500 con envelope { error: { message, code? } } via apiError().
+//   - Distinguimos VALIDATION_FAILED (datos malformados en origen) del genérico
+//     INTERNAL_ERROR para que un cliente pueda decidir si reintenta o reporta.
 
 export async function GET() {
   try {
     const metrics = await getDashboardMetrics();
-    return NextResponse.json(metrics); // 200 OK con el contrato DashboardMetrics
+    return apiSuccess(metrics); // 200 OK con el contrato DashboardMetrics
   } catch (error) {
-    // Logueamos en server para tener trazabilidad; al cliente solo le devolvemos un mensaje genérico
+    // Log con todo el detalle en server — el cliente solo ve el envelope limpio
     console.error("[/api/dashboard/metrics]", error);
-    return NextResponse.json(
-      { error: "Failed to load dashboard metrics" },
-      { status: 500 }
-    );
+
+    // ZodError = el origen devolvió datos que no cumplen el contrato.
+    // Lo separamos del resto para facilitar alerting/diagnóstico.
+    // Detección estructural (no instanceof) por si llega de otra realm.
+    const isZodError =
+      error instanceof Error && error.name === "ZodError";
+
+    if (isZodError) {
+      return apiError("Dashboard metrics failed validation at the source.", {
+        status: 500,
+        code: "VALIDATION_FAILED",
+      });
+    }
+
+    return apiError("Failed to load dashboard metrics.", {
+      status: 500,
+      code: "INTERNAL_ERROR",
+    });
   }
 }
