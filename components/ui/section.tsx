@@ -8,11 +8,14 @@ type SectionProps = {
 
 // Section
 // -------
-// Unidad de layout para agrupar bloques visuales
-// Se usa para dividir páginas en secciones claras (dashboard, landing, etc.)
+// Wrapper estándar de layout.
+// Controla spacing vertical consistente en toda la app.
 
-export function Section({ children, className }: SectionProps) {
+export function Section({ children }: { children: React.ReactNode }) {
   return (
-    <section className={cn("py-10 space-y-6", className)}>{children}</section>
+    <section className="py-16">
+      {/* py-16 = ritmo vertical del sistema */}
+      <div className="max-w-6xl mx-auto px-6">{children}</div>
+    </section>
   );
 }
