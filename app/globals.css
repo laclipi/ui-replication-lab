@@ -170,4 +170,101 @@
       transparent
     );
   }
+
+  /* hero-aurora
+     -----------
+     EL movimiento visual firma de stripe.com: un degradado iridiscente que
+     barre el hero con tonos cian → violeta → magenta → ámbar. La técnica:
+
+       1. Varias capas de radial-gradient solapadas, cada una con su color en
+          oklch (espacio perceptualmente uniforme — los colores se mezclan
+          sin generar "lodo gris" en los bordes).
+       2. Las ellipses son grandes (60–80% del contenedor) → los colores se
+          funden en lugar de quedarse como blobs aislados.
+       3. Opacidades 0.30–0.45 → vivos pero no garish. Sirven igual en light
+          y dark mode porque la luminancia (~0.7) está en el medio del rango.
+       4. SIN filter: blur — los radial-gradient ya son borrosos por
+          definición. filter:blur sería overkill y caro en GPU.
+
+     Resultado: el "aurora" que asocias a las landings de Stripe / Linear /
+     OpenAI cuando enseñan producto. Es un decorado puro — pointer-events:none
+     en el padre lo mantiene fuera de la interacción. */
+  .hero-aurora {
+    background:
+      radial-gradient(
+        ellipse 70% 60% at 15% 20%,
+        oklch(0.78 0.18 220 / 0.45),
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 65% 55% at 80% 25%,
+        oklch(0.6 0.24 285 / 0.45),
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 60% 50% at 55% 75%,
+        oklch(0.65 0.25 320 / 0.4),
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 50% 45% at 95% 80%,
+        oklch(0.82 0.16 70 / 0.3),
+        transparent 70%
+      );
+  }
+
+  /* hero-slant
+     ----------
+     El corte diagonal característico al pie del hero de Stripe. clip-path con
+     un polígono que mantiene el rectángulo arriba y "muerde" la esquina
+     inferior derecha. El cálculo en vw → el ángulo del corte escala con la
+     anchura del viewport (siempre se ve igual de "agresivo" sea cual sea
+     la pantalla).
+
+     Lo aplicamos solo al backdrop, no a la sección entera — así el contenido
+     (CTAs, etc.) se queda intacto y solo se corta el color de fondo. */
+  .hero-slant {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 5vw), 0 100%);
+  }
+
+  /* gradient-text-aurora
+     --------------------
+     Truco clásico de landings dev-tool: una palabra del headline pintada con
+     el mismo degradado del backdrop → tu cerebro registra "esto es coherente,
+     diseñado". Funciona por background-clip: text:
+
+       1. La caja del span recibe un linear-gradient como background.
+       2. background-clip: text recorta el fondo a la SILUETA de las letras.
+       3. color: transparent deja ver el background-clipped por debajo.
+
+     Los colores son los mismos cian/violeta/magenta del aurora — coherencia
+     visual sin que parezcan tres elementos sueltos. */
+  .gradient-text-aurora {
+    background: linear-gradient(
+      135deg,
+      oklch(0.78 0.18 220),
+      oklch(0.6 0.25 285) 50%,
+      oklch(0.65 0.25 320)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* code-window
+     -----------
+     Marco para el panel de código del hero. Imita ventana de macOS:
+       - rounded-xl + border + ring sutil → look elevado
+       - bg-card/60 + backdrop-blur → "cristal esmerilado" que deja entrever
+         el aurora detrás (efecto premium, muy SaaS moderno)
+       - shadow grande + tint coloreado → da volumen sin parecer cartón. */
+  .code-window {
+    background-color: color-mix(in oklch, var(--card) 65%, transparent);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    box-shadow:
+      0 1px 0 0 color-mix(in oklch, var(--foreground) 8%, transparent) inset,
+      0 30px 60px -20px oklch(0.2 0.1 280 / 0.35),
+      0 10px 30px -10px oklch(0.2 0.1 220 / 0.25);
+  }
 }

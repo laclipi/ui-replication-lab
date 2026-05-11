@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
 
+import { AnnouncementRibbon } from "@/components/layout/announcement-ribbon";
 import { MarketingNav } from "@/components/layout/marketing-nav";
 import { MarketingFooter } from "@/components/layout/marketing-footer";
 
@@ -33,6 +34,10 @@ export default function MarketingLayout({ children }: { children: ReactNode }) {
   return (
     // min-h-screen + flex-col → footer siempre al final aunque el contenido sea corto
     <div className="bg-background text-foreground flex min-h-screen flex-col">
+      {/* Orden visual: Ribbon → Nav glassy → contenido.
+          Ambos quedan en flow normal (no fixed) — el sticky de la nav los
+          pega al top al hacer scroll. */}
+      <AnnouncementRibbon />
       <MarketingNav />
 
       {/* flex-1 → el main absorbe el espacio sobrante, empujando el footer hacia abajo */}
