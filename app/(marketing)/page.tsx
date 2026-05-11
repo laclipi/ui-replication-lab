@@ -1,19 +1,20 @@
-import { AppShell } from "@/components/layout/AppShell";
 import { HeroStripe } from "@/components/sections/HeroStripe";
 import { FeatureStripe } from "@/components/sections/FeatureStripe";
 import { DeveloperStripe } from "@/components/sections/DeveloperStripe";
 
-// Marketing landing (public)
-// --------------------------
-// Lives under the (marketing) route group so it shares the root layout
-// without leaking dashboard concerns. URL: /
+// Marketing home — URL: "/"
+// -------------------------
+// El chrome (nav + footer) lo aporta app/(marketing)/layout.tsx,
+// así que esta page solo se preocupa de su contenido propio.
+// Server component → se prerendera como HTML estático.
 
 export default function MarketingHome() {
   return (
-    <AppShell>
+    // Fragment: el layout del grupo ya envuelve con <main>, no necesitamos otro wrapper
+    <>
       <HeroStripe />
       <FeatureStripe />
       <DeveloperStripe />
-    </AppShell>
+    </>
   );
 }
