@@ -128,3 +128,46 @@
     @apply font-sans;
   }
 }
+
+@layer utilities {
+  /* hero-grid
+     ---------
+     Patrón de grid sutil (64x64) con fade radial — el "spotlight" característico
+     de landings SaaS modernas (Linear, Vercel, etc.). Cómo funciona:
+
+       1. Dos linear-gradient en cruz dibujan líneas verticales/horizontales de 1px
+          usando --border (respeta el theme: light/dark automáticamente).
+       2. background-size define el tamaño de la celda (64px = sweet spot visual).
+       3. mask-image deja visible el centro y desvanece los bordes — sin esta máscara
+          el grid se siente "pesado" y cubre toda la página. */
+  .hero-grid {
+    background-image:
+      linear-gradient(to right, var(--border) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(
+      ellipse 60% 50% at 50% 30%,
+      black 40%,
+      transparent 90%
+    );
+    -webkit-mask-image: radial-gradient(
+      ellipse 60% 50% at 50% 30%,
+      black 40%,
+      transparent 90%
+    );
+  }
+
+  /* hero-glow
+     ---------
+     Halo radial arriba del hero. Truco clave: color-mix(in oklch, ...) mezcla
+     --foreground (que es oklch) con transparent → mismo glow en light y dark mode
+     sin condicionales. La opacidad baja (6%) lo mantiene como "sugerencia"
+     visual en lugar de un foco protagonista. */
+  .hero-glow {
+    background: radial-gradient(
+      ellipse 80% 50% at 50% -10%,
+      color-mix(in oklch, var(--foreground) 6%, transparent),
+      transparent
+    );
+  }
+}
