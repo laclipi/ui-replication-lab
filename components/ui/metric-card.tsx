@@ -1,19 +1,26 @@
-import { cn } from "@/lib/utils";
-
-type MetricVariant = "default" | "success" | "warning" | "danger";
-
-type MetricCardProps = {
-  title: string;
-  value?: string;
-  change?: string;
-  loading?: boolean;
-  variant?: "default" | "success" | "warning";
-};
-
 // MetricCard
 // ----------
 // Componente de sistema para métricas SaaS.
 // Diseñado como primitive reutilizable estilo Stripe.
+
+// Variantes visuales soportadas — single source of truth para tipo y estilos.
+type MetricVariant = "default" | "success" | "warning";
+
+type MetricCardProps = {
+  title: string; // Nombre de la métrica (ej. "Active Users")
+  value?: string; // Valor formateado; undefined ⇒ se asume loading
+  change?: string; // Indicador de variación (ej. "+12%")
+  loading?: boolean; // Si true, muestra skeleton inline
+  variant?: MetricVariant; // Color semántico del valor
+};
+
+// Mapa de variante → clase Tailwind. Tipado como Record para que TS exija
+// que toda nueva variante tenga estilo asociado (no se cuela un fallthrough).
+const variantStyles: Record<MetricVariant, string> = {
+  default: "text-foreground",
+  success: "text-green-600",
+  warning: "text-yellow-600",
+};
 
 export function MetricCard({
   title,
@@ -22,38 +29,24 @@ export function MetricCard({
   loading = false,
   variant = "default",
 }: MetricCardProps) {
-  // 🎨 Variante visual del card
-  const variantStyles = {
-    default: "text-foreground",
-    success: "text-green-600",
-    warning: "text-yellow-600",
-  };
-
   return (
-    <div
-      className="
-        rounded-2xl border border-border
-        bg-card p-6
-        space-y-2
-        transition-all duration-200
-      "
-    >
+    <div className="border-border bg-card space-y-2 rounded-2xl border p-6 transition-all duration-200">
       {/* Title */}
-      <p className="text-sm text-muted-foreground">{title}</p>
+      <p className="text-muted-foreground text-sm">{title}</p>
 
       {/* Value */}
       <div className="text-2xl font-semibold">
         {loading ? (
-          // Skeleton simple inline
-          <div className="h-6 w-24 bg-muted animate-pulse rounded" />
+          // Skeleton inline — ancho fijo para que no haya layout shift al hacer swap
+          <div className="bg-muted h-6 w-24 animate-pulse rounded" />
         ) : (
           <span className={variantStyles[variant]}>{value}</span>
         )}
       </div>
 
-      {/* Change indicator */}
+      {/* Change indicator — solo aparece si hay valor real (no en loading) */}
       {change && !loading && (
-        <p className="text-xs text-muted-foreground">{change}</p>
+        <p className="text-muted-foreground text-xs">{change}</p>
       )}
     </div>
   );

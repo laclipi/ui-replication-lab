@@ -1,9 +1,9 @@
 export function HeroStripe() {
   return (
     <section className="py-24">
-      <div className="max-w-6xl mx-auto px-6 text-center space-y-6">
+      <div className="mx-auto max-w-6xl space-y-6 px-6 text-center">
         {/* Eyebrow */}
-        <p className="text-sm text-muted-foreground">
+        <p className="text-muted-foreground text-sm">
           Payments infrastructure for the internet
         </p>
 
@@ -13,18 +13,18 @@ export function HeroStripe() {
         </h1>
 
         {/* Subtext */}
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+        <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
           A unified platform to accept payments, send payouts, and manage
           business revenue at scale.
         </p>
 
         {/* CTA */}
         <div className="flex items-center justify-center gap-3 pt-4">
-          <button className="px-4 py-2 rounded-md bg-black text-white">
+          <button className="rounded-md bg-black px-4 py-2 text-white">
             Start now
           </button>
 
-          <button className="px-4 py-2 rounded-md border border-border">
+          <button className="border-border rounded-md border px-4 py-2">
             Contact sales
           </button>
         </div>

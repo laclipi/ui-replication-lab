@@ -33,8 +33,7 @@ const formatRevenue = (value: number) =>
 const formatNumber = (value: number) =>
   new Intl.NumberFormat("en-US").format(value); // 1284 → "1,284"
 
-const formatPercent = (value: number) =>
-  `${value.toFixed(1)}%`; // 3.2 → "3.2%"
+const formatPercent = (value: number) => `${value.toFixed(1)}%`; // 3.2 → "3.2%"
 
 export default async function DashboardPage() {
   // Forzamos dynamic rendering leyendo headers() del request.
@@ -56,7 +55,7 @@ export default async function DashboardPage() {
           actions={
             <button
               type="button"
-              className="px-3 py-1 text-sm rounded-md border border-border hover:bg-muted transition"
+              className="border-border hover:bg-muted rounded-md border px-3 py-1 text-sm transition"
             >
               Export
             </button>
@@ -66,7 +65,7 @@ export default async function DashboardPage() {
 
       {/* Métricas principales — sin estados de loading: el servidor ya tiene los datos */}
       <Section>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <MetricCard
             title="Active Users"
             value={formatNumber(metrics.activeUsers)}
@@ -91,12 +90,12 @@ export default async function DashboardPage() {
 
       {/* Secondary layout — placeholders hasta que metamos charts/feed reales */}
       <Section>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="h-40 rounded-xl border border-border bg-card flex items-center justify-center text-sm text-muted-foreground">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="border-border bg-card text-muted-foreground flex h-40 items-center justify-center rounded-xl border text-sm">
             Chart Placeholder
           </div>
 
-          <div className="h-40 rounded-xl border border-border bg-card flex items-center justify-center text-sm text-muted-foreground">
+          <div className="border-border bg-card text-muted-foreground flex h-40 items-center justify-center rounded-xl border text-sm">
             Activity Feed
           </div>
         </div>

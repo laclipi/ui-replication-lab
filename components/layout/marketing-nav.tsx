@@ -20,7 +20,7 @@ export function MarketingNav() {
   return (
     <header
       // sticky + backdrop blur = nav que "flota" sobre el contenido al hacer scroll
-      className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/70 backdrop-blur-md supports-[backdrop-filter]:bg-background/60"
+      className="border-border/60 bg-background/70 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-40 w-full border-b backdrop-blur-md"
     >
       <div className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between px-6">
         {/* Logo / brand (izquierda) */}
@@ -30,7 +30,7 @@ export function MarketingNav() {
         >
           <span
             // Cuadradito de marca: usa el primary del theme para que respete dark mode
-            className="inline-block h-5 w-5 rounded-md bg-foreground"
+            className="bg-foreground inline-block h-5 w-5 rounded-md"
             aria-hidden // No aporta info al lector de pantalla, solo decorativo
           />
           UI Lab
@@ -42,7 +42,7 @@ export function MarketingNav() {
             <Link
               key={item.href}
               href={item.href}
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground text-sm transition-colors"
             >
               {item.label}
             </Link>
@@ -53,7 +53,7 @@ export function MarketingNav() {
         <div className="flex items-center gap-2">
           <Link
             href="/dashboard" // Saltamos al área app (auth real vendrá en otra fase)
-            className="hidden text-sm text-muted-foreground transition-colors hover:text-foreground sm:inline-block"
+            className="text-muted-foreground hover:text-foreground hidden text-sm transition-colors sm:inline-block"
           >
             Sign in
           </Link>
@@ -62,7 +62,8 @@ export function MarketingNav() {
             {/* asChild = el Button presta sus estilos al <Link> hijo (sin <button> dentro de <a>) */}
             <Link href="/dashboard">
               Get started
-              <ArrowRight aria-hidden /> {/* Tamaño lo controla la variante del Button */}
+              <ArrowRight aria-hidden />{" "}
+              {/* Tamaño lo controla la variante del Button */}
             </Link>
           </Button>
         </div>
