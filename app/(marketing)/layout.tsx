@@ -10,16 +10,23 @@ import { MarketingFooter } from "@/components/layout/marketing-footer";
 // - Server component (los componentes hijos también lo son → 0 JS de cliente aquí).
 // - Define el chrome público: nav arriba + footer abajo.
 // - Nada de auth ni dashboards: marketing está estrictamente aislado.
+//
+// Metadata:
+//   El title + OG defaults vienen del root layout (que lee siteConfig).
+//   Aquí sólo refinamos la **descripción** para que el copy público sea más corto
+//   y orientado a usuario (en vez del copy técnico que usamos como fallback global).
+
+const marketingDescription =
+  "Frontend lab for replicating real SaaS UI tickets. A unified platform demo.";
 
 export const metadata: Metadata = {
-  // Title template aplica solo a las páginas dentro del grupo marketing.
-  // El "%s" se sustituye por el title que defina cada page; el default cubre la home.
-  title: {
-    default: "UI Replication Lab — Build the future of payments",
-    template: "%s — UI Replication Lab",
+  description: marketingDescription,
+  openGraph: {
+    description: marketingDescription, // Mantiene el OG card alineado al copy público
   },
-  description:
-    "Frontend lab for replicating real SaaS UI tickets. A unified platform demo.",
+  twitter: {
+    description: marketingDescription, // Idem para Twitter card
+  },
 };
 
 export default function MarketingLayout({ children }: { children: ReactNode }) {
