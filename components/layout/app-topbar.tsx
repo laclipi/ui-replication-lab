@@ -39,7 +39,7 @@ export function AppTopbar() {
   return (
     <header
       // Sticky con blur — el contenido scrollea por debajo
-      className="sticky top-0 z-30 flex h-14 items-center justify-between gap-4 border-b border-border bg-background/70 px-6 backdrop-blur-md supports-[backdrop-filter]:bg-background/60"
+      className="border-border bg-background/70 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-30 flex h-14 items-center justify-between gap-4 border-b px-6 backdrop-blur-md"
     >
       {/* Título de página (izquierda) */}
       <div className="min-w-0">
@@ -53,7 +53,7 @@ export function AppTopbar() {
         {/* Search stub — visible solo en >= sm para no comerse el espacio en mobile */}
         <div className="relative hidden sm:block">
           <Search
-            className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground"
+            className="text-muted-foreground absolute top-1/2 left-2.5 h-3.5 w-3.5 -translate-y-1/2"
             aria-hidden
           />
           <input
@@ -61,7 +61,7 @@ export function AppTopbar() {
             placeholder="Search..."
             // role/label implícito por type=search; aria-label evita lectores confundidos
             aria-label="Search"
-            className="h-8 w-56 rounded-md border border-border bg-background pl-8 pr-3 text-sm outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40"
+            className="border-border bg-background placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/40 h-8 w-56 rounded-md border pr-3 pl-8 text-sm outline-none focus-visible:ring-2"
           />
         </div>
 
@@ -69,7 +69,7 @@ export function AppTopbar() {
         <button
           type="button"
           aria-label="Notifications"
-          className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          className="border-border text-muted-foreground hover:bg-muted hover:text-foreground inline-flex h-8 w-8 items-center justify-center rounded-md border transition-colors"
         >
           <Bell className="h-4 w-4" aria-hidden />
         </button>

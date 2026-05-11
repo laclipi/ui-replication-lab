@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 export default function AppLayout({ children }: { children: ReactNode }) {
   return (
     // h-screen + flex horizontal → sidebar fija a la izq, panel principal a la derecha
-    <div className="flex min-h-screen bg-background text-foreground">
+    <div className="bg-background text-foreground flex min-h-screen">
       <AppSidebar />
 
       {/* min-w-0 evita que un hijo con contenido ancho fuerce overflow horizontal */}

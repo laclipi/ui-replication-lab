@@ -31,10 +31,7 @@ export type ApiError = z.infer<typeof ApiErrorSchema>;
 // ----------
 // Devuelve un response 200 (o el status que se pase) con el body tipado.
 // Generic <T> propaga el tipo del payload a quien consuma la response.
-export function apiSuccess<T>(
-  data: T,
-  init?: ResponseInit
-): NextResponse<T> {
+export function apiSuccess<T>(data: T, init?: ResponseInit): NextResponse<T> {
   return NextResponse.json(data, init);
 }
 
@@ -45,7 +42,7 @@ export function apiSuccess<T>(
 // - code es opcional; solo aparece en el JSON si lo pasas explícitamente.
 export function apiError(
   message: string,
-  options?: { status?: number; code?: string }
+  options?: { status?: number; code?: string },
 ): NextResponse<ApiError> {
   // Spread condicional: si code es undefined, no contamina el JSON con "code": null
   const payload: ApiError = {

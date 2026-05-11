@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 export default function MarketingLayout({ children }: { children: ReactNode }) {
   return (
     // min-h-screen + flex-col → footer siempre al final aunque el contenido sea corto
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
+    <div className="bg-background text-foreground flex min-h-screen flex-col">
       <MarketingNav />
 
       {/* flex-1 → el main absorbe el espacio sobrante, empujando el footer hacia abajo */}

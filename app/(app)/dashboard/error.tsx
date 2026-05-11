@@ -31,13 +31,11 @@ export default function DashboardError({
   return (
     <Section>
       <div className="space-y-4">
-        <ErrorState
-          message="Something went wrong loading the dashboard. Please try again."
-        />
+        <ErrorState message="Something went wrong loading the dashboard. Please try again." />
 
         {/* digest: opcional, ayuda a soporte a correlacionar con server logs */}
         {error.digest && (
-          <p className="text-xs text-muted-foreground">
+          <p className="text-muted-foreground text-xs">
             Reference ID: <code className="font-mono">{error.digest}</code>
           </p>
         )}
@@ -45,7 +43,7 @@ export default function DashboardError({
         <button
           type="button"
           onClick={unstable_retry} // Re-renderiza el segmento desde cero (re-ejecuta el Server Component)
-          className="inline-flex items-center justify-center rounded-md border border-border bg-background px-3 py-1.5 text-sm font-medium transition hover:bg-muted"
+          className="border-border bg-background hover:bg-muted inline-flex items-center justify-center rounded-md border px-3 py-1.5 text-sm font-medium transition"
         >
           Try again
         </button>

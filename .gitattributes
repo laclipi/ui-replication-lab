@@ -1,0 +1,22 @@
+# Git line ending normalization
+# -----------------------------
+# Forces LF for all text files regardless of contributor's `core.autocrlf` setting.
+# Without this, Windows users get CRLF in their working tree, Prettier rewrites
+# to LF, and `format:check` in CI (Ubuntu, LF) bounces forever.
+#
+# `* text=auto eol=lf` says:
+#   - Auto-detect text vs binary.
+#   - For text: store with LF in the repo AND check out with LF on every OS.
+
+* text=auto eol=lf
+
+# Binary types — never normalize these
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.webp  binary
+*.ico   binary
+*.pdf   binary
+*.woff  binary
+*.woff2 binary

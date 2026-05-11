@@ -51,7 +51,7 @@ export function MarketingFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-border bg-background">
+    <footer className="border-border bg-background border-t">
       <div className="mx-auto w-full max-w-6xl px-6 py-16">
         {/* Bloque superior: brand + columnas */}
         <div className="grid gap-10 md:grid-cols-5">
@@ -62,12 +62,12 @@ export function MarketingFooter() {
               className="flex items-center gap-2 text-sm font-semibold tracking-tight"
             >
               <span
-                className="inline-block h-5 w-5 rounded-md bg-foreground"
+                className="bg-foreground inline-block h-5 w-5 rounded-md"
                 aria-hidden
               />
               UI Lab
             </Link>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-muted-foreground text-xs">
               Frontend lab for replicating real SaaS UI tickets.
             </p>
           </div>
@@ -75,7 +75,7 @@ export function MarketingFooter() {
           {/* 4 columnas de links — se generan desde FOOTER_SECTIONS */}
           {FOOTER_SECTIONS.map((section) => (
             <div key={section.title} className="space-y-3">
-              <h3 className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+              <h3 className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
                 {section.title}
               </h3>
               <ul className="space-y-2">
@@ -83,7 +83,7 @@ export function MarketingFooter() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-sm text-foreground/80 transition-colors hover:text-foreground"
+                      className="text-foreground/80 hover:text-foreground text-sm transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -95,11 +95,11 @@ export function MarketingFooter() {
         </div>
 
         {/* Bloque inferior: copyright + links pequeños */}
-        <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-border pt-6 md:flex-row md:items-center">
-          <p className="text-xs text-muted-foreground">
+        <div className="border-border mt-12 flex flex-col items-start justify-between gap-4 border-t pt-6 md:flex-row md:items-center">
+          <p className="text-muted-foreground text-xs">
             © {year} UI Replication Lab. All rights reserved.
           </p>
-          <div className="flex items-center gap-4 text-xs text-muted-foreground">
+          <div className="text-muted-foreground flex items-center gap-4 text-xs">
             <Link href="/#privacy" className="hover:text-foreground">
               Privacy
             </Link>

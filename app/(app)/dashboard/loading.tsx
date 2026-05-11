@@ -18,7 +18,7 @@ function SkeletonBlock({ className }: { className?: string }) {
   return (
     <div
       // animate-pulse + bg muted = shimmer accesible y barato
-      className={`animate-pulse rounded bg-muted ${className ?? ""}`}
+      className={`bg-muted animate-pulse rounded ${className ?? ""}`}
       aria-hidden // El wrapper de arriba ya marca aria-busy; cada bloque no añade info
     />
   );
@@ -30,7 +30,7 @@ export default function DashboardLoading() {
     <div aria-busy="true" aria-live="polite">
       {/* PageHeader skeleton — title + description, mismas alturas que el real */}
       <Section>
-        <div className="flex items-start justify-between border-b border-border pb-6">
+        <div className="border-border flex items-start justify-between border-b pb-6">
           <div className="space-y-2">
             <SkeletonBlock className="h-7 w-40" /> {/* simula el <h1> */}
             <SkeletonBlock className="h-4 w-72" /> {/* simula el description */}
@@ -41,12 +41,12 @@ export default function DashboardLoading() {
 
       {/* MetricCard grid skeleton — 3 cards con la altura interna real */}
       <Section>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {/* Array.from con índice — clave estable suficiente para una lista estática */}
           {Array.from({ length: 3 }).map((_, i) => (
             <div
               key={i}
-              className="rounded-2xl border border-border bg-card p-6 space-y-3"
+              className="border-border bg-card space-y-3 rounded-2xl border p-6"
             >
               <SkeletonBlock className="h-3 w-24" /> {/* title */}
               <SkeletonBlock className="h-7 w-32" /> {/* value */}
@@ -58,9 +58,9 @@ export default function DashboardLoading() {
 
       {/* Secondary layout — chart + feed placeholders (manteniendo la altura del real) */}
       <Section>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <SkeletonBlock className="h-40 rounded-xl border border-border bg-card" />
-          <SkeletonBlock className="h-40 rounded-xl border border-border bg-card" />
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <SkeletonBlock className="border-border bg-card h-40 rounded-xl border" />
+          <SkeletonBlock className="border-border bg-card h-40 rounded-xl border" />
         </div>
       </Section>
     </div>

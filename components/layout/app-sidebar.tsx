@@ -50,13 +50,13 @@ export function AppSidebar() {
   return (
     <aside
       // Sidebar fija a la izquierda. min-w-0 en hermanos permite que el main no overflow.
-      className="hidden w-60 shrink-0 flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground md:flex"
+      className="border-sidebar-border bg-sidebar text-sidebar-foreground hidden w-60 shrink-0 flex-col border-r md:flex"
       aria-label="Sidebar"
     >
       {/* Brand del sidebar */}
-      <div className="flex h-14 items-center gap-2 border-b border-sidebar-border px-4">
+      <div className="border-sidebar-border flex h-14 items-center gap-2 border-b px-4">
         <span
-          className="inline-block h-5 w-5 rounded-md bg-sidebar-foreground"
+          className="bg-sidebar-foreground inline-block h-5 w-5 rounded-md"
           aria-hidden
         />
         <span className="text-sm font-semibold tracking-tight">UI Lab</span>
@@ -77,7 +77,7 @@ export function AppSidebar() {
                 "flex items-center gap-2.5 rounded-md px-3 py-2 text-sm transition-colors",
                 active
                   ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                  : "text-sidebar-foreground/70 hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground"
+                  : "text-sidebar-foreground/70 hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground",
               )}
             >
               <Icon className="h-4 w-4" aria-hidden />
@@ -88,7 +88,7 @@ export function AppSidebar() {
       </nav>
 
       {/* Nav secundaria + user card abajo */}
-      <div className="border-t border-sidebar-border p-3 space-y-3">
+      <div className="border-sidebar-border space-y-3 border-t p-3">
         <nav className="space-y-1" aria-label="Secondary">
           {SECONDARY_NAV.map((item) => {
             const Icon = item.icon;
@@ -96,7 +96,7 @@ export function AppSidebar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="flex items-center gap-2.5 rounded-md px-3 py-2 text-sm text-sidebar-foreground/70 transition-colors hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground"
+                className="text-sidebar-foreground/70 hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground flex items-center gap-2.5 rounded-md px-3 py-2 text-sm transition-colors"
               >
                 <Icon className="h-4 w-4" aria-hidden />
                 <span>{item.label}</span>
@@ -106,19 +106,19 @@ export function AppSidebar() {
         </nav>
 
         {/* User card placeholder — sustituir por sesión real cuando se integre auth */}
-        <div className="flex items-center gap-2.5 rounded-md border border-sidebar-border bg-background/40 px-3 py-2">
+        <div className="border-sidebar-border bg-background/40 flex items-center gap-2.5 rounded-md border px-3 py-2">
           <div
             // Avatar con iniciales. Reemplazar por <Image /> cuando haya datos reales.
-            className="flex h-7 w-7 items-center justify-center rounded-full bg-sidebar-primary text-xs font-medium text-sidebar-primary-foreground"
+            className="bg-sidebar-primary text-sidebar-primary-foreground flex h-7 w-7 items-center justify-center rounded-full text-xs font-medium"
             aria-hidden
           >
             UL
           </div>
           <div className="min-w-0">
-            <p className="truncate text-xs font-medium leading-tight">
+            <p className="truncate text-xs leading-tight font-medium">
               Demo user
             </p>
-            <p className="truncate text-[11px] text-sidebar-foreground/60">
+            <p className="text-sidebar-foreground/60 truncate text-[11px]">
               demo@uilab.dev
             </p>
           </div>

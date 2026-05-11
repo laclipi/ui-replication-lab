@@ -1,21 +1,22 @@
-import { ReactNode } from "react";
-import { cn } from "@/lib/utils";
-
-type SectionProps = {
-  children: ReactNode;
-  className?: string;
-};
+import type { ReactNode } from "react";
+import { cn } from "@/lib/utils"; // Merge de clases Tailwind con dedupe semántico
 
 // Section
 // -------
-// Wrapper estándar de layout.
-// Controla spacing vertical consistente en toda la app.
+// Wrapper estándar de layout vertical.
+// Controla ritmo y ancho máximo consistente en toda la app.
+// Acepta className para extender (ej. fondo distinto, padding ajustado).
 
-export function Section({ children }: { children: React.ReactNode }) {
+type SectionProps = {
+  children: ReactNode;
+  className?: string; // Extiende/sobrescribe estilos del <section> externo
+};
+
+export function Section({ children, className }: SectionProps) {
   return (
-    <section className="py-16">
-      {/* py-16 = ritmo vertical del sistema */}
-      <div className="max-w-6xl mx-auto px-6">{children}</div>
+    // py-16 marca el ritmo vertical del sistema; className puede sobrescribirlo si hace falta
+    <section className={cn("py-16", className)}>
+      <div className="mx-auto max-w-6xl px-6">{children}</div>
     </section>
   );
 }

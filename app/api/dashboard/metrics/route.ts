@@ -27,8 +27,7 @@ export async function GET() {
     // ZodError = el origen devolvió datos que no cumplen el contrato.
     // Lo separamos del resto para facilitar alerting/diagnóstico.
     // Detección estructural (no instanceof) por si llega de otra realm.
-    const isZodError =
-      error instanceof Error && error.name === "ZodError";
+    const isZodError = error instanceof Error && error.name === "ZodError";
 
     if (isZodError) {
       return apiError("Dashboard metrics failed validation at the source.", {
