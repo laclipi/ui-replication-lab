@@ -30,10 +30,19 @@ Opinionated Next.js 16 starter for replicating real SaaS UI tickets. Built as a 
 nvm use
 
 npm install
+cp .env.example .env.local   # Optional in dev; required in prod for absolute OG/sitemap URLs
 npm run dev
 ```
 
 Open <http://localhost:3000> for the marketing landing. <http://localhost:3000/dashboard> for the dashboard.
+
+### Environment variables
+
+| Name                   | Used by                                   | Default in dev          |
+| ---------------------- | ----------------------------------------- | ----------------------- |
+| `NEXT_PUBLIC_SITE_URL` | `metadataBase`, `sitemap.ts`, `robots.ts` | `http://localhost:3000` |
+
+See `.env.example` for the full template. In production this **must** be set to the canonical origin (no trailing slash) or social previews will point at localhost.
 
 ### Scripts
 
@@ -92,7 +101,16 @@ components/
 lib/
 ├── api/responses.ts          # apiSuccess<T> / apiError helpers + ApiErrorSchema
 ├── dashboard/metrics.ts      # Single source of truth: schema + type + server-only getter
+├── seo/site.ts               # Site identity config consumed by metadata + sitemap + robots
 └── utils.ts                  # cn() etc.
+
+# SEO files at the root of /app — Next picks them up by convention
+app/
+├── sitemap.ts                # → /sitemap.xml (only public URLs; dashboard excluded)
+├── robots.ts                 # → /robots.txt (disallows /dashboard and /api)
+├── opengraph-image.tsx       # → /opengraph-image (1200×630, ImageResponse-rendered)
+├── twitter-image.tsx         # → /twitter-image (re-exports OG by default)
+└── icon.tsx                  # → /icon (32×32 favicon, no binary asset shipped)
 ```
 
 ### Route-group convention
@@ -132,6 +150,14 @@ These are the rules the codebase already follows. Stick to them when extending.
 ### Dynamic rendering
 
 The dashboard page calls `await headers()` to opt into dynamic rendering on every request. In Next 16, `export const dynamic = "force-dynamic"` is reserved for the Cache Components opt-in — the canonical alternative is reading a Request-time API (`headers`/`cookies`/`draftMode`). When auth lands, that `await headers()` is replaced by the real session read.
+
+### SEO
+
+- `lib/seo/site.ts` is the single source of truth for site name, tagline, canonical URL, locale, and social handles. Change here and it propagates to every `<head>` tag.
+- `app/layout.tsx` declares `metadataBase`, `openGraph`, `twitter`, and `robots: { index: true, follow: true }`. Nested layouts override only what they need (the `(app)` group flips robots to `noindex/nofollow`; the `(marketing)` layout refines the description with marketing copy).
+- `app/sitemap.ts` and `app/robots.ts` produce `/sitemap.xml` and `/robots.txt`. Only public URLs land in the sitemap; `/dashboard` and `/api/*` are explicitly disallowed in robots.
+- `app/opengraph-image.tsx` + `app/twitter-image.tsx` are dynamic image routes generated at build time via `next/og`'s `ImageResponse`. No binary assets are shipped.
+- `app/icon.tsx` does the same trick for the favicon. Replace with a static `app/icon.svg` if you want a hand-crafted asset.
 
 ---
 
