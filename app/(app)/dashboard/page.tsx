@@ -1,22 +1,25 @@
-"use client";
+"use client"; // useDashboardMetrics es un hook de React Query → necesita cliente
 
-import { AppShell } from "@/components/layout/AppShell";
 import { Section } from "@/components/ui/section";
 import { PageHeader } from "@/components/ui/page-header";
 import { MetricCard } from "@/components/ui/metric-card";
 import { ErrorState } from "@/components/ui/error-state";
 import { useDashboardMetrics } from "@/hooks/useDashboardMetrics";
 
-// Dashboard (app layer)
-// ---------------------
-// Lives under the (app) route group. URL: /dashboard
-// Marketing components must never be imported here.
+// Dashboard — URL: "/dashboard"
+// -----------------------------
+// Vive dentro del grupo (app); el chrome (sidebar + topbar) lo aporta
+// app/(app)/layout.tsx. Aquí solo va el contenido propio de la página.
+// Nota: en una iteración siguiente extraemos los hooks a un sub-componente
+// cliente para que la page pueda volver a ser server component.
 
 export default function DashboardPage() {
+  // React Query maneja loading/error/refetch; la prop `loading` la consumen los MetricCard
   const { data, isLoading, isError } = useDashboardMetrics();
 
   return (
-    <AppShell>
+    <>
+      {/* Header del dashboard */}
       <Section>
         <PageHeader
           title="Dashboard"
@@ -32,7 +35,9 @@ export default function DashboardPage() {
         />
       </Section>
 
+      {/* Métricas principales */}
       <Section>
+        {/* Error tiene prioridad: si falla, no renderizamos el grid de cards */}
         {isError && <ErrorState message="Failed to load dashboard metrics" />}
 
         {!isError && (
@@ -63,6 +68,7 @@ export default function DashboardPage() {
         )}
       </Section>
 
+      {/* Secondary dashboard layout — placeholders hasta que metamos charts reales */}
       <Section>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="h-40 rounded-xl border border-border bg-card flex items-center justify-center text-sm text-muted-foreground">
@@ -74,6 +80,6 @@ export default function DashboardPage() {
           </div>
         </div>
       </Section>
-    </AppShell>
+    </>
   );
 }
